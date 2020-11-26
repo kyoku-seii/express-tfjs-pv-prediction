@@ -22,7 +22,9 @@ const normalize = (data) => {
         "labels": [],
         "data": [],
         "max": new Array(11).fill(Number.NEGATIVE_INFINITY),
-        "min": new Array(11).fill(Number.POSITIVE_INFINITY)
+        "min": new Array(11).fill(Number.POSITIVE_INFINITY),
+        "normalizedData": [],
+        "length": 0
     }
     data.forEach((obj) => {
         const row = []
@@ -37,6 +39,13 @@ const normalize = (data) => {
         result.data.push(row)
         result.labels.push(Number(after30))
     })
+    result.data.forEach((arr) => {
+        const norRow = arr.map((item, index) => {
+            return (item - result.min[index]) / (result.max[index] - result.min[index])
+        })
+        result.normalizedData.push(norRow)
+    })
+    result.length = result.data.length
     return result
 }
 

@@ -23,6 +23,7 @@ router.get('/output', loginCheck, function (req, res, next) {
     })
 });
 
+// 获取能够快速代入机器模型的归一化数据
 router.get('/normalizedData', loginCheck, function (req, res, next) {
     const id = req.query.id || ''
     const result = getOutput(id)
