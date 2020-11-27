@@ -15,5 +15,12 @@ const getOutput = (id) => {
     })
 }
 
+const getTest = (id) => {
+    const sql = `select * from test where pvid='${id}'`
+    return exec(sql).then(row => {
+        return row
+    })
+}
 
-module.exports = { getDetail, getOutput }
+
+module.exports = { getDetail, getOutput, getTest }

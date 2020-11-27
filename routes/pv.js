@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const { getDetail, getOutput } = require('../controller/pv')
+const { getDetail, getOutput, getTest } = require('../controller/pv')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const loginCheck = require('../middleware/loginCheck')
 const normalize = require('../utils/Normalization')
+const dataProcess = require('../utils/dataProcess')
 
 //获取一台pv的详细配置信息
 router.get('/detail', loginCheck, function (req, res, next) {
@@ -20,6 +21,16 @@ router.get('/output', loginCheck, function (req, res, next) {
     const result = getOutput(id)
     return result.then(data => {
         res.json(new SuccessModel(data))
+    })
+});
+
+//获取测试的发电信息
+router.get('/test', loginCheck, function (req, res, next) {
+    const id = req.query.id || ''
+    const result = getTest(id)
+    return result.then(data => {
+        const result = dataProcess(data)
+        res.json(new SuccessModel(result))
     })
 });
 
